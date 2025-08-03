@@ -81,8 +81,9 @@ namespace QuickLook.Plugin.ApkViewer {
             tbSupportScr.Text = string.Join(", ", ApkInfo.SupportScreens);
 
             if (ApkInfo.SupportedABIs.Count == 0) {
-                labels.Children.Remove(lbAbis);
-                textboxs.Children.Remove(tbAbis);
+                lbAbis.Visibility = Visibility.Collapsed;
+                tbAbis.Visibility = Visibility.Collapsed;
+                cpAbis.Visibility = Visibility.Collapsed;
             }
             else {
                 tbAbis.Text = string.Join(", ", ApkInfo.SupportedABIs);
@@ -148,6 +149,12 @@ namespace QuickLook.Plugin.ApkViewer {
                 Text = text;
                 Style = style;
                 MouseDoubleClick += dbClickHandler;
+            }
+        }
+
+        private void CopyField_Click(object sender, RoutedEventArgs e) {
+            if (sender is Button btn && btn.Tag is string text) {
+                Clipboard.SetText(text);
             }
         }
     }

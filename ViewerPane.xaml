@@ -71,30 +71,91 @@
                    VerticalAlignment="Center" HorizontalAlignment="Center" />
         </Grid>
 
-        <StackPanel Name="labels" Grid.Column="1" Margin="5,0"
-                    HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Label Content="Application name:" Style="{StaticResource StaticLabel}"/>
-            <Label Content="Package name:"     Style="{StaticResource StaticLabel}"/>
-            <Label Content="Version name:"     Style="{StaticResource StaticLabel}"/>
-            <Label Content="Version code:"     Style="{StaticResource StaticLabel}"/>
-            <Label Content="Min SDK:"          Style="{StaticResource StaticLabel}"/>
-            <Label Content="Target SDK:"       Style="{StaticResource StaticLabel}"/>
-            <Label Content="Support screens:"  Style="{StaticResource StaticLabel}"/>
-            <Label Content="Support ABIs:"     Style="{StaticResource StaticLabel}" Name="lbAbis" />
-            <Label Content="Package size:"     Style="{StaticResource StaticLabel}"/>
-        </StackPanel>
+        <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="5,0,10,0" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <StackPanel Name="textboxs" Grid.Column="2" VerticalAlignment="Top" Margin="5,0,10,0">
-            <TextBox x:Name="tbAppName"    Text="..." Width="auto" Style="{StaticResource SelectableLabel}" MouseDoubleClick="SelectableLabel_MouseDoubleClick" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbPckName"    Text="..." Width="auto" Style="{StaticResource SelectableLabel}" MouseDoubleClick="SelectableLabel_MouseDoubleClick" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbVerName"    Text="..." Width="auto" Style="{StaticResource SelectableLabel}" MouseDoubleClick="SelectableLabel_MouseDoubleClick" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbVerCode"    Text="..." Width="auto" Style="{StaticResource SelectableLabel}" MouseDoubleClick="SelectableLabel_MouseDoubleClick" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbMinSDK"     Text="..." Width="auto" Style="{StaticResource SelectableLabel}" MouseDoubleClick="SelectableLabel_MouseDoubleClick" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbTargetSDK"  Text="..." Width="auto" Style="{StaticResource SelectableLabel}" MouseDoubleClick="SelectableLabel_MouseDoubleClick" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbSupportScr" Text="..." Width="auto" Style="{StaticResource SelectableLabel}" MouseDoubleClick="SelectableLabel_MouseDoubleClick" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbAbis"       Text="..." Width="auto" Style="{StaticResource SelectableLabel}" MouseDoubleClick="SelectableLabel_MouseDoubleClick" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBox x:Name="tbPckSize"    Text="..." Width="auto" Style="{StaticResource SelectableLabel}" MouseDoubleClick="SelectableLabel_MouseDoubleClick" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-        </StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130"/>
+                <!-- Label column -->
+                <ColumnDefinition Width="*"/>
+                <!-- TextBox column -->
+                <ColumnDefinition Width="Auto"/>
+                <!-- Copy button column -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Application Name -->
+            <Label Grid.Row="0" Grid.Column="0" Content="Application name:" Style="{StaticResource StaticLabel}" />
+            <TextBox x:Name="tbAppName" Grid.Row="0" Grid.Column="1" Style="{StaticResource SelectableLabel}" 
+      Text="..." MouseDoubleClick="SelectableLabel_MouseDoubleClick" />
+            <Button Grid.Row="0" Grid.Column="2" Content="⧉" ToolTip="Copy" Padding="2" Margin="5,0,0,0"
+     VerticalAlignment="Center" Click="CopyField_Click" Tag="{Binding ElementName=tbAppName, Path=Text}" />
+
+            <!-- Package Name -->
+            <Label Grid.Row="1" Grid.Column="0" Content="Package name:" Style="{StaticResource StaticLabel}" />
+            <TextBox x:Name="tbPckName" Grid.Row="1" Grid.Column="1" Style="{StaticResource SelectableLabel}" 
+      Text="..." MouseDoubleClick="SelectableLabel_MouseDoubleClick" />
+            <Button Grid.Row="1" Grid.Column="2" Content="⧉" ToolTip="Copy" Padding="2" Margin="5,0,0,0"
+     VerticalAlignment="Center" Click="CopyField_Click" Tag="{Binding ElementName=tbPckName, Path=Text}" />
+
+            <!-- Version Name -->
+            <Label Grid.Row="2" Grid.Column="0" Content="Version name:" Style="{StaticResource StaticLabel}" />
+            <TextBox x:Name="tbVerName" Grid.Row="2" Grid.Column="1" Style="{StaticResource SelectableLabel}" 
+      Text="..." MouseDoubleClick="SelectableLabel_MouseDoubleClick" />
+            <Button Grid.Row="2" Grid.Column="2" Content="⧉" ToolTip="Copy" Padding="2" Margin="5,0,0,0"
+     VerticalAlignment="Center" Click="CopyField_Click" Tag="{Binding ElementName=tbVerName, Path=Text}" />
+
+            <!-- Version Code -->
+            <Label Grid.Row="3" Grid.Column="0" Content="Version code:" Style="{StaticResource StaticLabel}" />
+            <TextBox x:Name="tbVerCode" Grid.Row="3" Grid.Column="1" Style="{StaticResource SelectableLabel}" 
+      Text="..." MouseDoubleClick="SelectableLabel_MouseDoubleClick" />
+            <Button Grid.Row="3" Grid.Column="2" Content="⧉" ToolTip="Copy" Padding="2" Margin="5,0,0,0"
+     VerticalAlignment="Center" Click="CopyField_Click" Tag="{Binding ElementName=tbVerCode, Path=Text}" />
+
+            <!-- Min SDK -->
+            <Label Grid.Row="4" Grid.Column="0" Content="Min SDK:" Style="{StaticResource StaticLabel}" />
+            <TextBox x:Name="tbMinSDK" Grid.Row="4" Grid.Column="1" Style="{StaticResource SelectableLabel}" 
+      Text="..." MouseDoubleClick="SelectableLabel_MouseDoubleClick" />
+            <Button Grid.Row="4" Grid.Column="2" Content="⧉" ToolTip="Copy" Padding="2" Margin="5,0,0,0"
+     VerticalAlignment="Center" Click="CopyField_Click" Tag="{Binding ElementName=tbMinSDK, Path=Text}" />
+
+            <!-- Target SDK -->
+            <Label Grid.Row="5" Grid.Column="0" Content="Target SDK:" Style="{StaticResource StaticLabel}" />
+            <TextBox x:Name="tbTargetSDK" Grid.Row="5" Grid.Column="1" Style="{StaticResource SelectableLabel}" 
+      Text="..." MouseDoubleClick="SelectableLabel_MouseDoubleClick" />
+            <Button Grid.Row="5" Grid.Column="2" Content="⧉" ToolTip="Copy" Padding="2" Margin="5,0,0,0"
+     VerticalAlignment="Center" Click="CopyField_Click" Tag="{Binding ElementName=tbTargetSDK, Path=Text}" />
+
+            <!-- Support Screens -->
+            <Label Grid.Row="6" Grid.Column="0" Content="Support screens:" Style="{StaticResource StaticLabel}" />
+            <TextBox x:Name="tbSupportScr" Grid.Row="6" Grid.Column="1" Style="{StaticResource SelectableLabel}" 
+      Text="..." MouseDoubleClick="SelectableLabel_MouseDoubleClick" />
+            <Button Grid.Row="6" Grid.Column="2" Content="⧉" ToolTip="Copy" Padding="2" Margin="5,0,0,0"
+     VerticalAlignment="Center" Click="CopyField_Click" Tag="{Binding ElementName=tbSupportScr, Path=Text}" />
+
+            <!-- Support ABIs -->
+            <Label x:Name="lbAbis" Grid.Row="7" Grid.Column="0" Content="Support ABIs:" Style="{StaticResource StaticLabel}" />
+            <TextBox x:Name="tbAbis" Grid.Row="7" Grid.Column="1" Style="{StaticResource SelectableLabel}" 
+      Text="..." MouseDoubleClick="SelectableLabel_MouseDoubleClick" />
+            <Button x:Name="cpAbis" Grid.Row="7" Grid.Column="2" Content="⧉" ToolTip="Copy" Padding="2" Margin="5,0,0,0"
+     VerticalAlignment="Center" Click="CopyField_Click" Tag="{Binding ElementName=tbAbis, Path=Text}" />
+
+            <!-- Package Size -->
+            <Label Grid.Row="8" Grid.Column="0" Content="Package size:" Style="{StaticResource StaticLabel}" />
+            <TextBox x:Name="tbPckSize" Grid.Row="8" Grid.Column="1" Style="{StaticResource SelectableLabel}" 
+      Text="..." MouseDoubleClick="SelectableLabel_MouseDoubleClick" />
+            <Button Grid.Row="8" Grid.Column="2" Content="⧉" ToolTip="Copy" Padding="2" Margin="5,0,0,0"
+     VerticalAlignment="Center" Click="CopyField_Click" Tag="{Binding ElementName=tbPckSize, Path=Text}" />
+        </Grid>
 
         <Image x:Name="btnSwTheme" Height="20" Width="20" Margin="10"
                Cursor="Hand" ToolTip="Switch theme" Grid.Column="3"

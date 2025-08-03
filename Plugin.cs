@@ -4,6 +4,8 @@ using System.Windows;
 using AAPTForNet;
 using QuickLook.Common.Helpers;
 using QuickLook.Common.Plugin;
+using System.IO.Compression;
+using System.Linq;
 
 namespace QuickLook.Plugin.ApkViewer {
     public class Plugin : IViewer {
@@ -14,7 +16,10 @@ namespace QuickLook.Plugin.ApkViewer {
 
         public void Init() { }
 
-        public bool CanHandle(string path) => path.ToLower().EndsWith(".apk");
+        public bool CanHandle(string path) {
+            string ext = Path.GetExtension(path).ToLowerInvariant();
+            return ext == ".apk" || ext == ".xapk";
+        }
 
         public void Prepare(string path, ContextObject context) {
             context.Title = Path.GetFileName(path);
@@ -52,17 +57,41 @@ namespace QuickLook.Plugin.ApkViewer {
         }
 
         private string createTempApk(string sourceFile) {
-            string tempFile = string.Empty;
+            string ext = Path.GetExtension(sourceFile).ToLowerInvariant();
+
+            if (ext == ".xapk") {
+                try {
+                    using (var archive = System.IO.Compression.ZipFile.OpenRead(sourceFile)) {
+                        var apkEntry = archive.Entries.FirstOrDefault(e =>
+                            e.FullName.EndsWith(".apk", StringComparison.OrdinalIgnoreCase));
+
+                        if (apkEntry != null) {
+                            string tempFile = Path.GetTempFileName();
+                            apkEntry.ExtractToFile(tempFile, true);
+                            return tempFile;
+                        }
+                    }
+                }
+                catch (Exception e) {
+                    ProcessHelper.WriteLog($"Failed to extract XAPK: {sourceFile}\r\n{e}");
+                }
+
+                // Fall through to original file if APK not found
+                return sourceFile;
+            }
+
+            // Handle regular APK
+            string tempApkFile;
             try {
-                tempFile = Path.GetTempFileName();
+                tempApkFile = Path.GetTempFileName();
             }
             catch (IOException) {
-                tempFile = Path.Combine(Path.GetTempPath(), $"{nameof(ApkViewer)}.tmp");
+                tempApkFile = Path.Combine(Path.GetTempPath(), $"{nameof(ApkViewer)}.tmp");
             }
 
             try {
-                File.Copy(sourceFile, tempFile, true);
-                return tempFile;
+                File.Copy(sourceFile, tempApkFile, true);
+                return tempApkFile;
             }
             catch {
                 return sourceFile;
